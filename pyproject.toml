@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+# Match pytest.ini: root then src so final sys.path has src before `.` (avoids shadowing by ./evaluation/)
+pythonpath = [".", "src"]
+testpaths = ["tests"]
