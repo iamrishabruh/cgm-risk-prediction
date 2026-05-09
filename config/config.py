@@ -26,6 +26,13 @@ class Config:
     LEARNING_RATE = 1e-3
     EARLY_STOP_PATIENCE = 10
     SEED = 42
+    # Stratified hold-out inside each CV training fold (for early stopping / checkpoint selection)
+    VAL_FRACTION = 0.2
+    VAL_MIN_SAMPLES = 2
+
+    TORCH_MODELS = frozenset({"TabTransformer", "AttentionMLP", "GNN"})
+    BASELINE_MODELS = frozenset({"LogisticRegression", "RandomForest"})
+    ENSEMBLE_NAME = "Ensemble"
 
     # GNN-specific parameters
     GNN_HIDDEN_DIM = 128
