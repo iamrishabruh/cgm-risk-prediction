@@ -33,12 +33,12 @@ jobs:
 
       - name: Run tests
         env:
-          PYTHONPATH: src:.
-        run: pytest -q
+          PYTHONPATH: ${{ github.workspace }}/src:${{ github.workspace }}
+        run: python -m pytest -q
 
       - name: Import smoke checks
         env:
-          PYTHONPATH: src:.
+          PYTHONPATH: ${{ github.workspace }}/src:${{ github.workspace }}
         run: |
           python -c "from data.processor import DataProcessor; from data.features import extract_cgm_features"
           python -c "from models.factory import build_torch_model; build_torch_model('GNN')"
