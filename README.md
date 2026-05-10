@@ -50,16 +50,7 @@ Implementation: `src/data/features.py`, `src/data/processor.py`.
 - **Baselines**: fit on the full outer training fold; no epochal validation.  
 - **Metrics**: accuracy, ROC-AUC, sensitivity/specificity at 0.5 threshold; torch runs also report cross-entropy on the held-out fold.
 
-## 7. Results
-
-| Model | Mean AUC | Mean Acc | Notes |
-|-------|----------|----------|-------|
-| *TBD* | | | Fill after training on the approved DiaTrend snapshot. |
-| *TBD* | | | Compare baselines vs neural models on the **same folds**. |
-
-**Do not** invent benchmark numbers. After you obtain data access, run `scripts/evaluate.py` per model and paste aggregates (mean ± std across folds) into this table.
-
-## 8. Environment setup
+## 7. Environment setup
 
 Python 3.10+ recommended. From the repository root:
 
@@ -80,7 +71,7 @@ Working imports assume:
 export PYTHONPATH=src:.
 ```
 
-## 9. How to run training
+## 8. How to run training
 
 Torch models (inner validation split for checkpoint selection when possible):
 
@@ -97,7 +88,7 @@ PYTHONPATH=src:. python scripts/train_baseline.py --model LogisticRegression --f
 PYTHONPATH=src:. python scripts/train_baseline.py --model RandomForest --folds 5 --repeats 1
 ```
 
-## 10. How to run evaluation
+## 9. How to run evaluation
 
 ```bash
 PYTHONPATH=src:. python scripts/evaluate.py --model LogisticRegression --folds 5 --repeats 1
@@ -105,7 +96,7 @@ PYTHONPATH=src:. python scripts/evaluate.py --model TabTransformer --folds 5 --r
 PYTHONPATH=src:. python scripts/evaluate.py --model Ensemble --folds 5 --repeats 1
 ```
 
-## 11. How to run the API
+## 10. How to run the API
 
 ```bash
 PYTHONPATH=src:. uvicorn api.main:app --reload
@@ -115,7 +106,7 @@ PYTHONPATH=src:. uvicorn api.main:app --reload
 - `POST /predict/features` — JSON body with `features` (length 5), `model`, `fold_index`.  
 - `POST /predict` — multipart XLSX upload (still requires `data/raw/demographics.xlsx` for subject id matching).
 
-## 12. How to run the Streamlit dashboard
+## 11. How to run the Streamlit dashboard
 
 ```bash
 PYTHONPATH=src:. streamlit run ui/streamlit_app.py
@@ -123,7 +114,7 @@ PYTHONPATH=src:. streamlit run ui/streamlit_app.py
 
 The UI shells out to `scripts/train.py` / `scripts/train_baseline.py` so it never embeds a FastAPI app (previous coupling removed).
 
-## 13. Limitations and clinical safety
+## 12. Limitations and clinical safety
 
 - **Label/feature coupling**: HbA1c may appear as both input and label definition in the default proxy—reporting metrics without acknowledging this is misleading.  
 - **Collapsed time series**: only three CGM scalars are used; no explicit modeling of time-in-range, trends, or sensor noise distributions.  
@@ -132,7 +123,7 @@ The UI shells out to `scripts/train.py` / `scripts/train_baseline.py` so it neve
 
 Read `docs/clinical-limitations.md` before any external communication about this work.
 
-## 14. Next improvements
+## 13. Next improvements
 
 - Replace the HbA1c proxy with **temporal prediction** (e.g., forecasting glucose) using proper rolling-origin evaluation.  
 - Add **group / site held-out validation** and calibration curves.  
@@ -165,7 +156,3 @@ PYTHONPATH=src:. python -m pytest
 ## License
 
 MIT — see `LICENSE`.
-
-## Contact
-
-Questions about this codebase: see git history / repository owner.
